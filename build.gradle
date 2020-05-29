@@ -1,9 +1,11 @@
 plugins {
     id 'groovy'
+    id "com.bmuschko.nexus" version "2.3.1"
+    id "io.codearte.nexus-staging" version "0.21.1"
 }
 
 group 'xyz.ronella.gosu'
-version '1.0-SNAPSHOT'
+version '1.0.0'
 
 sourceCompatibility = 1.8
 
@@ -15,6 +17,53 @@ repositories {
             password "${artifactoryPassword}"
         }
     }
+}
+
+modifyPom {
+    project {
+        name 'GS CodeNarc Extension'
+        description 'A CodeNarc extension library for gosu. '
+        url 'https://github.com/rcw3bb/gs-codenarc-ext'
+        inceptionYear '2020'
+
+        scm {
+            url 'https://github.com/rcw3bb/gs-codenarc-ext'
+            connection 'https://github.com/rcw3bb/gs-codenarc-ext.git'
+            developerConnection 'https://github.com/rcw3bb/gs-codenarc-ext.git'
+        }
+
+        licenses {
+            license {
+                name 'MIT License'
+                url 'https://github.com/rcw3bb/gs-codenarc-ext/blob/master/LICENSE.md'
+                distribution 'repo'
+            }
+        }
+
+        developers {
+            developer {
+                id 'rcw3bb'
+                name 'Ronaldo Webb'
+                email 'ronaldo.c.webb@gmail.com'
+            }
+        }
+    }
+}
+
+extraArchive {
+    sources = true
+    tests = true
+    javadoc = true
+}
+
+nexus {
+    sign = true
+    repositoryUrl = 'https://oss.sonatype.org/service/local/staging/deploy/maven2'
+    snapshotRepositoryUrl = 'https://oss.sonatype.org/content/repositories/snapshots'
+}
+
+nexusStaging {
+    stagingProfileId = "33650220e7857c"
 }
 
 dependencies {
