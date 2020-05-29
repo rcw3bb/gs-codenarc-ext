@@ -1,0 +1,23 @@
+plugins {
+    id 'groovy'
+}
+
+group 'xyz.ronella.gosu'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven {
+        url 'https://repo.ronella.xyz/artifactory/java-central'
+        credentials {
+            username "${artifactoryUsername}"
+            password "${artifactoryPassword}"
+        }
+    }
+}
+
+dependencies {
+    implementation group: 'org.codenarc', name: 'CodeNarc', version: '1.5'
+    testImplementation group: 'org.codehaus.groovy', name: 'groovy-test', version: '2.3.11'
+}

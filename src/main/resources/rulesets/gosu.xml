@@ -1,0 +1,27 @@
+<ruleset xmlns="http://codenarc.org/ruleset/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://codenarc.org/ruleset/1.0 http://codenarc.org/ruleset-schema.xsd"
+	xsi:noNamespaceSchemaLocation="http://codenarc.org/ruleset-schema.xsd">
+
+	<description>
+		Gosu specific rules
+    </description>
+
+	<rule class='org.codenarc.rule.gosu.GosuClassSizeRule' />
+    <rule class='org.codenarc.rule.gosu.GosuCommentedOutCodeRule' />
+	<rule class='org.codenarc.rule.gosu.GosuCyclomaticComplexityRule' />
+    <rule class='org.codenarc.rule.gosu.GosuFindStatementRule' />
+    <rule class='org.codenarc.rule.gosu.GosuFunctionParameterLengthRule' />
+	<rule class='org.codenarc.rule.gosu.GosuFunctionSizeRule' />
+    <rule class='org.codenarc.rule.gosu.GosuGetCountUsageRule' />
+	<rule class='org.codenarc.rule.gosu.GosuIllegalImportsRule' />
+    <rule class='org.codenarc.rule.gosu.GosuInternalImportsRule' />
+    <rule class='org.codenarc.rule.gosu.GosuJavaStyleLineEndingRule' />
+    <rule class='org.codenarc.rule.gosu.GosuNestedIfRule' />
+    <rule class='org.codenarc.rule.gosu.GosuObjectEqualityRule' />
+    <rule class='org.codenarc.rule.gosu.GosuReturnCountRule' />
+    <rule class='org.codenarc.rule.gosu.GosuUnusedFunctionParameterRule' />
+	<rule class='org.codenarc.rule.gosu.GosuUnusedImportsRule' />
+    <rule class='org.codenarc.rule.gosu.GosuUnusedPrivateFunctionRule' />
+    <rule class='org.codenarc.rule.gosu.GosuVariableScopeRule' />
+
+</ruleset>
