@@ -99,7 +99,15 @@ The **codenarc.xml** holds the ruleset configuration for codenarc. The ruleset f
 
    > Update these three properties accordingly to your needs.
 
-3. In your **build.gradle**, apply the plugin **org.gosu-lang.gosu** as follows:
+3. Create the **rulesets directory** as follows:
+
+   ```
+   <PROJECT_DIR>/src/main/resources/rulesets
+   ```
+
+4. Copy the [gosu.xml](https://github.com/rcw3bb/gs-codenarc-ext/blob/master/src/main/resources/rulesets/gosu.xml) into the newly created **rulesets directory**:
+
+5. In your **build.gradle**, apply the plugin **org.gosu-lang.gosu** as follows:
 
    ```groovy
    apply plugin: "org.gosu-lang.gosu"
@@ -111,7 +119,7 @@ The **codenarc.xml** holds the ruleset configuration for codenarc. The ruleset f
    >
    > *Use the branch **gosu-15** if you want to use the more recent gosu.*
 
-4. Add the following to your **buildscript dependencies**:
+6. Add the following to your **buildscript dependencies**:
 
    ```groovy
    classpath group: 'org.codenarc', name: 'CodeNarc', version: '1.5'
@@ -132,7 +140,7 @@ The **codenarc.xml** holds the ruleset configuration for codenarc. The ruleset f
    }
    ```
 
-5. Create a **codenarcGosu** ant task as follows:
+7. Create a **codenarcGosu** ant task as follows:
 
    ```groovy
    ant.taskdef(name: 'codenarcGosu', classname: 'org.codenarc.ant.CodeNarcTask') {
@@ -144,7 +152,7 @@ The **codenarc.xml** holds the ruleset configuration for codenarc. The ruleset f
    }
    ```
 
-6. Create a **codenarcMainGosu** gradle task as follows:
+8. Create a **codenarcMainGosu** gradle task as follows:
 
    ```groovy
    task codenarcMainGosu {
@@ -165,7 +173,7 @@ The **codenarc.xml** holds the ruleset configuration for codenarc. The ruleset f
    }
    ```
 
-7. If everything is good, you can now execute the following the gradle command:
+9. If everything is good, you can now execute the following the gradle command:
 
    ```
    gradle codenarcMainGosu
