@@ -5,7 +5,7 @@ plugins {
 }
 
 group 'xyz.ronella.gosu'
-version '1.0.0'
+version '1.1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
@@ -67,6 +67,7 @@ nexusStaging {
 }
 
 dependencies {
-    implementation group: 'org.codenarc', name: 'CodeNarc', version: '1.5'
-    testImplementation group: 'org.codehaus.groovy', name: 'groovy-test', version: '2.3.11'
+    implementation group: 'org.codenarc', name: 'CodeNarc', version: '2.1.0'
+    implementation group: 'org.codehaus.groovy', name:'groovy-all', version: '2.5.14'
+    testImplementation group: 'org.codehaus.groovy', name: 'groovy-test', version: '2.5.14'
 }
