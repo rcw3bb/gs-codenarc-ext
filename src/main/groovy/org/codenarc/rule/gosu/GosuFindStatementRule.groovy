@@ -16,19 +16,19 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 
 /**
  * Rule that checks for usage of the 'find' statement
  */
-class GosuFindStatementRule extends AbstractRule {
+class GosuFindStatementRule extends GosuAbstractRule {
     String name = 'GosuFindStatement'
     String description = 'Lines of code which use the find statement, which can be performance intensive.'
     int priority = 1
 
-    void applyTo(SourceCode sourceCode, List violations) {
+    @Override
+    void gosuApplyTo(SourceCode sourceCode, List violations) {
 
         def withinBlockComment = false
         sourceCode.getLines().eachWithIndex { obj, i ->

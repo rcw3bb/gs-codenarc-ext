@@ -16,29 +16,28 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 
 /**
  * This class performs a basic complexity check of Gosu functions.
  */
-class GosuCyclomaticComplexityRule extends AbstractRule {
+class GosuCyclomaticComplexityRule extends GosuAbstractRule {
 	
 	String name = 'GosuCyclomaticComplexity'
 	String description = 'Perform a standard cyclomatic complexity check.'
 	int priority = 1
 	int maxMethodComplexity = 7
-	
-	void applyTo(SourceCode sourceCode, List violations) {
+
+	@Override
+	void gosuApplyTo(SourceCode sourceCode, List violations) {
 		List functions = GosuUtil.getFunctions(sourceCode)
 		
 		functions.each {
-			
 			int complexityCount = 1
 			boolean withinBlockComment = false
-			it.lines.each { obj ->
-				
+
+			for (obj in it.lines) {
 				// Check for block comments and ignore until block finished
 				if (GosuUtil.isStartOfBlockComment(obj)) {
 					withinBlockComment = true
@@ -49,13 +48,12 @@ class GosuCyclomaticComplexityRule extends AbstractRule {
 				if (!withinBlockComment) {
 					complexityCount += checkAdditionalComplexity(obj)
 				}
+				if (complexityCount > maxMethodComplexity) {
+					violations << createViolation(it.startLineNumber, null, "Function complexity exceeds maximum. Maximum allowed: ${maxMethodComplexity}, Actual: ${complexityCount}")
+					break
+				}
 			}
-			
-			if (complexityCount > maxMethodComplexity) {
-				violations << createViolation(it.startLineNumber, null, "Function complexity exceeds maximum. Maximum allowed: ${maxMethodComplexity}, Actual: ${complexityCount}")
-			}
-			
-		}	  	
+		}
 	}
 	
 	/**

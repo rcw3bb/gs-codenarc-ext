@@ -16,19 +16,19 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 
 /**
 * Check for incorrect usage of checking for object equality by using Objects themselves instead of PublicID
 */
-class GosuObjectEqualityRule extends AbstractRule {
+class GosuObjectEqualityRule extends GosuAbstractRule {
    String name = 'GosuObjectEquality'
    String description = 'Incorrect usage of checking for object equality by using Objects themselves instead of PublicID'
    int priority = 1
-   
-   void applyTo(SourceCode sourceCode, List violations) {
+
+   @Override
+   void gosuApplyTo(SourceCode sourceCode, List violations) {
 	   
 	   def withinBlockComment = false
 	   sourceCode.getLines().eachWithIndex { obj, i ->

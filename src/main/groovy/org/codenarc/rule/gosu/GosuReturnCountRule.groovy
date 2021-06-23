@@ -16,29 +16,29 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil;
 
 /**
  * This class performs a basic count of return statement
  */
-class GosuReturnCountRule extends AbstractRule {
+class GosuReturnCountRule extends GosuAbstractRule {
 
 	String name = 'GosuReturnCount'
 	String description = 'Check for a maximum return statement count from Gosu functions.' 
 	int priority = 1
 	int maxReturnCount = 4
 	
-	void applyTo(SourceCode sourceCode, List violations) {
+	void gosuApplyTo(SourceCode sourceCode, List violations) {
 		List functions = GosuUtil.getFunctions(sourceCode)
 		
 		functions.each {
 			
 			int returnCount = 0
 			boolean withinBlockComment = false
-			it.lines.each { obj ->
-				
+
+			for (obj in it.lines) {
+
 				// Check for block comments and ignore until block finished
 				if (GosuUtil.isStartOfBlockComment(obj)) {
 					withinBlockComment = true
@@ -49,12 +49,12 @@ class GosuReturnCountRule extends AbstractRule {
 				if (!withinBlockComment && GosuUtil.isReturnStatement(obj)) {
 					returnCount++
 				}
+
+				if (returnCount > maxReturnCount) {
+					violations << createViolation(it.startLineNumber, null, "Function return statement count exceeds maximum. Maximum allowed: ${maxReturnCount}, Actual: ${returnCount}")
+					break
+				}
 			}
-			
-			if (returnCount > maxReturnCount) {
-				violations << createViolation(it.startLineNumber, null, "Function return statement count exceeds maximum. Maximum allowed: ${maxReturnCount}, Actual: ${returnCount}")
-			}
-			
 		}
 	}
 		

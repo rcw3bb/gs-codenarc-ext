@@ -16,7 +16,6 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 import org.codenarc.util.gosu.GosuCodeBlockWrapper
@@ -24,15 +23,17 @@ import org.codenarc.util.gosu.GosuCodeBlockWrapper
 /**
  * Illegal imports rule. Check for violations of the illegal imports rule.
  */
-class GosuIllegalImportsRule extends AbstractRule {
+class GosuIllegalImportsRule extends GosuAbstractRule {
 	String name = 'GosuIllegalImports'
 	String description = 'Illegal imports rule. Check for violations of the illegal imports rule.' 
 	int priority = 2
-	
-	void applyTo(SourceCode sourceCode, List violations) {
+
+	@Override
+	void gosuApplyTo(SourceCode sourceCode, List violations) {
 		
 		def usesTypeCache = [:]
 		def withinBlockComment = false
+
 		sourceCode.getLines().eachWithIndex { obj, i ->
 			
 			// Check for block comments and ignore until block finished

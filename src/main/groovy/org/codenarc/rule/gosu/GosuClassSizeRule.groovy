@@ -16,31 +16,33 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil;
 
 /**
  * Rule that checks the size of a class.
  */
-class GosuClassSizeRule extends AbstractRule {
+class GosuClassSizeRule extends GosuAbstractRule {
     String name = 'GosuClassSize'
     String description = 'Lines of code within a Gosu source code file, including comments.' 
     int priority = 2
     int maxLines = 1200
 
-    void applyTo(SourceCode sourceCode, List violations) {
-    	
-    	//Count lines that have text
+	@Override
+    void gosuApplyTo(SourceCode sourceCode, List violations) {
+
+		//Count lines that have text
     	int lineCount = 0
-    	sourceCode.getLines().each {
-    		if (!GosuUtil.isBlankLine(it)) {
-    			lineCount++
-    		}
-    	}
-    	
-    	if(lineCount > maxLines) {	
-    		violations << createViolation(0, null, "Class size exceeds maximum lines. Maximum allowed: ${maxLines}, Actual: ${sourceCode.getLines().size()}")
-    	}
-    }
+		int lineWithCode = 0
+		for (def it in sourceCode.getLines()) {
+			lineCount++
+			if (!GosuUtil.isBlankLine(it)) {
+				lineWithCode++
+				if (lineWithCode > maxLines) {
+					violations << createViolation(lineCount, it, "Class size exceeds maximum lines. Maximum allowed: ${maxLines}, Actual: ${lineWithCode}")
+					break;
+				}
+			}
+		}
+	}
 }

@@ -16,21 +16,20 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 
 /**
  * Rule that checks for unused private methods in a class
  */
-class GosuUnusedPrivateFunctionRule extends AbstractRule {
+class GosuUnusedPrivateFunctionRule extends GosuAbstractRule {
 
     String privateFunctionIdentifier = 'private'
 	String name = 'GosuUnusedFunctionMethod'
 	String description = 'Unused private function within a Gosu class.'
 	int priority = 2
 
-	void applyTo(SourceCode sourceCode, List violations) {
+	void gosuApplyTo(SourceCode sourceCode, List violations) {
 		List functions = GosuUtil.getFunctions(sourceCode)
 
 		functions.each {

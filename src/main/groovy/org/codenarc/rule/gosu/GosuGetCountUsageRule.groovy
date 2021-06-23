@@ -16,19 +16,19 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 
 /**
 * Check for incorrect usage of checking for object equality by using Objects themselves instead of PublicID
 */
-class GosuGetCountUsageRule extends AbstractRule {
+class GosuGetCountUsageRule extends GosuAbstractRule {
    String name = 'GosuGetCountUsage'
    String description = 'Incorrect usage of getCount() == 0'
    int priority = 3
-   
-   void applyTo(SourceCode sourceCode, List violations) {
+
+	@Override
+    void gosuApplyTo(SourceCode sourceCode, List violations) {
 	   
 	   def withinBlockComment = false
 	   sourceCode.getLines().eachWithIndex { obj, i ->
@@ -48,7 +48,7 @@ class GosuGetCountUsageRule extends AbstractRule {
 			   		violations << createViolation(i+1, null, "Incorrect usage of getCount() == 0 at line ${i+1}")
 			   }    		   
 	   }
-   }
+    }
 	   
    /**
     * Find instances of the pattern getCount() == 0

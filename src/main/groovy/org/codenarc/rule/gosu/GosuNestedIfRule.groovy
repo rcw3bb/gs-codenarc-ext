@@ -16,7 +16,6 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.source.SourceString
 import org.codenarc.util.gosu.GosuUtil
@@ -25,14 +24,15 @@ import org.codenarc.util.gosu.GosuUtil
  * Nested if rule. Check for violations in nested if depth.
  *
  */
-class GosuNestedIfRule extends AbstractRule {
+class GosuNestedIfRule extends GosuAbstractRule {
 
 	String name = 'GosuNestedIf'
 	String description = 'Nested if rule. Check for violations in nested if statement depth.' 
 	int priority = 1
 	int maxNestedDepth = 4
-	
-	void applyTo(SourceCode sourceCode, List violations) {
+
+	@Override
+	void gosuApplyTo(SourceCode sourceCode, List violations) {
 		List ifStatements = GosuUtil.getIfStatements(sourceCode)
 	
 		ifStatements.each { i ->

@@ -16,20 +16,20 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 
 /**
  * Rule that checks for Java style line endings ';'
  */
-class GosuJavaStyleLineEndingRule extends AbstractRule {
+class GosuJavaStyleLineEndingRule extends GosuAbstractRule {
 
 	String name = 'GosuJavaStyleLineEnding'
 	String description = 'Java style lind ending \';\' has been used.'
 	int priority = 3
 
-	void applyTo(SourceCode sourceCode, List violations) {
+    @Override
+	void gosuApplyTo(SourceCode sourceCode, List violations) {
 
         def withinBlockComment = false
         sourceCode.getLines().eachWithIndex { obj, i ->

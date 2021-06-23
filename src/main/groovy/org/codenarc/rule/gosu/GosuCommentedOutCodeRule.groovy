@@ -16,19 +16,19 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 
 /**
  * Rule for identifying commented out code.
  */
-class GosuCommentedOutCodeRule extends AbstractRule {
+class GosuCommentedOutCodeRule extends GosuAbstractRule {
 	String name = 'GosuCommentedOutCode'
 	String description = 'Check for commented out code.' 
 	int priority = 2
-	
-	void applyTo(SourceCode sourceCode, List violations) {
+
+	@Override
+	void gosuApplyTo(SourceCode sourceCode, List violations) {
 		
 		def withinBlockComment = false
         def withinExampleCodeBlock = false

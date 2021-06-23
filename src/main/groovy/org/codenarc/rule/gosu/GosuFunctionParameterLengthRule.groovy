@@ -16,20 +16,20 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 
 /**
  * Rule for checking the maximum allowed allowed parameter count for a function.
  */
-class GosuFunctionParameterLengthRule extends AbstractRule {
+class GosuFunctionParameterLengthRule extends GosuAbstractRule {
 	String name = 'GosuFunctionParameterLength'
 	String description = 'Check for the maximum allow parameter count.' 
 	int priority = 2
 	int maxParameters = 4
-	
-	void applyTo(SourceCode sourceCode, List violations) {
+
+	@Override
+	void gosuApplyTo(SourceCode sourceCode, List violations) {
 		
 		List functions = GosuUtil.getFunctions(sourceCode)
 		

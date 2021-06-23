@@ -16,7 +16,6 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 import org.codenarc.util.gosu.GosuCodeBlockWrapper
@@ -24,12 +23,12 @@ import org.codenarc.util.gosu.GosuCodeBlockWrapper
 /**
  * Unused imports rule. Check for violations of the unused imports rule.
  */
-class GosuUnusedImportsRule extends AbstractRule {
+class GosuUnusedImportsRule extends GosuAbstractRule {
 	String name = 'GosuUnusedImports'
 	String description = 'Unused imports rule. Check for violations of the unused imports rule.' 
 	int priority = 2
 	
-	void applyTo(SourceCode sourceCode, List violations) {
+	void gosuApplyTo(SourceCode sourceCode, List violations) {
 		
 		def usesTypeCache = [:]
 		def withinBlockComment = false

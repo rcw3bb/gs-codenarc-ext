@@ -16,37 +16,42 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 
 /**
  * Rule that checks the size of a method.
  */
-class GosuFunctionSizeRule extends AbstractRule {
+class GosuFunctionSizeRule extends GosuAbstractRule {
 	
 	String name = 'GosuFunctionSize'
 	String description = 'Lines of code within a Gosu function, including comments.' 
 	int priority = 2
 	int maxLines = 25
-	
-	void applyTo(SourceCode sourceCode, List violations) {
+
+	@Override
+	void gosuApplyTo(SourceCode sourceCode, List violations) {
 		
 		List functions = GosuUtil.getFunctions(sourceCode)
 		
 		functions.each {
 	
 			int lineCount = 0
-			it.lines.each { obj ->				
+			int lineWithCode = 0
+
+			for (def obj in it.lines) {
+				lineCount++
+
 				// Only count non-blank lines
 				if (!GosuUtil.isBlankLine(obj)) {
-					lineCount++
+					lineWithCode++
+
+					// Check for violation
+					if (lineWithCode > maxLines) {
+						violations << createViolation(lineCount, obj, "Maximum line count for function exceeded. Max: ${maxLines}, Actual: ${lineWithCode}")
+						break
+					}
 				}
-			}
-			
-			// Check for violation
-			if (lineCount > maxLines) {
-				violations << createViolation(it.startLineNumber, null, "Maximum line count for function exceeded. Max: ${maxLines}, Actual: ${lineCount}")
 			}
 		}
 	}

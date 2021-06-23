@@ -16,19 +16,19 @@
 
 package org.codenarc.rule.gosu
 
-import org.codenarc.rule.AbstractRule
 import org.codenarc.source.SourceCode
 import org.codenarc.util.gosu.GosuUtil
 
 /**
  * Internal imports rule. Check for violations of the internal imports rule.
  */
-class GosuInternalImportsRule extends AbstractRule {
+class GosuInternalImportsRule extends GosuAbstractRule {
     String name = 'GosuInternalImports'
     String description = 'Internal imports rule. Check for usage of com.guidewire.* internal classes.'
     int priority = 3
 
-    void applyTo(SourceCode sourceCode, List violations) {
+    @Override
+    void gosuApplyTo(SourceCode sourceCode, List violations) {
 
         def withinBlockComment = false
         sourceCode.getLines().eachWithIndex { obj, i ->
