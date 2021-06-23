@@ -22,11 +22,12 @@ import org.codenarc.util.gosu.GosuUtil
 /**
  * Rule that checks for usage of scoped variables
  */
-class GosuVariableScopeRule extends GosuAbstractRule {
+class GosuVariableScopeRule extends AbstractGosuRule {
     String name = 'GosuVariableScope'
     String description = 'Detects usage of request or session scoped variables.'
     int priority = 3
 
+    @Override
     void gosuApplyTo(SourceCode sourceCode, List violations) {
 
         def withinBlockComment = false

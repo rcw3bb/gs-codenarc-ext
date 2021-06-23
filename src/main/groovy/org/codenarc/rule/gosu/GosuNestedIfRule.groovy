@@ -24,7 +24,7 @@ import org.codenarc.util.gosu.GosuUtil
  * Nested if rule. Check for violations in nested if depth.
  *
  */
-class GosuNestedIfRule extends GosuAbstractRule {
+class GosuNestedIfRule extends AbstractGosuRule {
 
 	String name = 'GosuNestedIf'
 	String description = 'Nested if rule. Check for violations in nested if statement depth.' 

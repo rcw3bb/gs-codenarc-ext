@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil
 /**
  * Rule that checks for Java style line endings ';'
  */
-class GosuJavaStyleLineEndingRule extends GosuAbstractRule {
+class GosuJavaStyleLineEndingRule extends AbstractGosuRule {
 
 	String name = 'GosuJavaStyleLineEnding'
 	String description = 'Java style lind ending \';\' has been used.'

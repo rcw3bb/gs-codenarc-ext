@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil
 /**
  * Rule that checks the size of a method.
  */
-class GosuFunctionSizeRule extends GosuAbstractRule {
+class GosuFunctionSizeRule extends AbstractGosuRule {
 	
 	String name = 'GosuFunctionSize'
 	String description = 'Lines of code within a Gosu function, including comments.' 
@@ -33,15 +33,13 @@ class GosuFunctionSizeRule extends GosuAbstractRule {
 	void gosuApplyTo(SourceCode sourceCode, List violations) {
 		
 		List functions = GosuUtil.getFunctions(sourceCode)
-		
+
 		functions.each {
-	
-			int lineCount = 0
+
 			int lineWithCode = 0
+			int lineCount = it.startLineNumber
 
 			for (def obj in it.lines) {
-				lineCount++
-
 				// Only count non-blank lines
 				if (!GosuUtil.isBlankLine(obj)) {
 					lineWithCode++
@@ -52,6 +50,8 @@ class GosuFunctionSizeRule extends GosuAbstractRule {
 						break
 					}
 				}
+
+				lineCount++
 			}
 		}
 	}

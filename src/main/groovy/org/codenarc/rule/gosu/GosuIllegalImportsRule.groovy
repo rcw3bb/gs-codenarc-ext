@@ -23,7 +23,7 @@ import org.codenarc.util.gosu.GosuCodeBlockWrapper
 /**
  * Illegal imports rule. Check for violations of the illegal imports rule.
  */
-class GosuIllegalImportsRule extends GosuAbstractRule {
+class GosuIllegalImportsRule extends AbstractGosuRule {
 	String name = 'GosuIllegalImports'
 	String description = 'Illegal imports rule. Check for violations of the illegal imports rule.' 
 	int priority = 2

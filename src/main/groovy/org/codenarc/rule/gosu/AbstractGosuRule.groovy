@@ -8,7 +8,7 @@ import org.codenarc.rule.Violation
 import org.codenarc.source.SourceCode
 import org.codenarc.source.SourceString
 
-abstract class GosuAbstractRule extends AbstractRule {
+abstract class AbstractGosuRule extends AbstractRule {
 
     protected DisableRulesInCommentsPlugin filter = new DisableRulesInCommentsPlugin()
 

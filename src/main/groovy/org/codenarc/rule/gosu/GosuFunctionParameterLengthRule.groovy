@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil
 /**
  * Rule for checking the maximum allowed allowed parameter count for a function.
  */
-class GosuFunctionParameterLengthRule extends GosuAbstractRule {
+class GosuFunctionParameterLengthRule extends AbstractGosuRule {
 	String name = 'GosuFunctionParameterLength'
 	String description = 'Check for the maximum allow parameter count.' 
 	int priority = 2

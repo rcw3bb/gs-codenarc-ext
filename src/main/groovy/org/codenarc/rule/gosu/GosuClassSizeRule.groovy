@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil;
 /**
  * Rule that checks the size of a class.
  */
-class GosuClassSizeRule extends GosuAbstractRule {
+class GosuClassSizeRule extends AbstractGosuRule {
     String name = 'GosuClassSize'
     String description = 'Lines of code within a Gosu source code file, including comments.' 
     int priority = 2

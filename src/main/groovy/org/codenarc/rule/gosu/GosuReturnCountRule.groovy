@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil;
 /**
  * This class performs a basic count of return statement
  */
-class GosuReturnCountRule extends GosuAbstractRule {
+class GosuReturnCountRule extends AbstractGosuRule {
 
 	String name = 'GosuReturnCount'
 	String description = 'Check for a maximum return statement count from Gosu functions.' 
@@ -36,6 +36,7 @@ class GosuReturnCountRule extends GosuAbstractRule {
 			
 			int returnCount = 0
 			boolean withinBlockComment = false
+			int lineCount = it.startLineNumber
 
 			for (obj in it.lines) {
 
@@ -51,9 +52,11 @@ class GosuReturnCountRule extends GosuAbstractRule {
 				}
 
 				if (returnCount > maxReturnCount) {
-					violations << createViolation(it.startLineNumber, null, "Function return statement count exceeds maximum. Maximum allowed: ${maxReturnCount}, Actual: ${returnCount}")
+					violations << createViolation(lineCount, null, "Function return statement count exceeds maximum. Maximum allowed: ${maxReturnCount}, Actual: ${returnCount}")
 					break
 				}
+
+				lineCount++
 			}
 		}
 	}

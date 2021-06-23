@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil
 /**
  * Internal imports rule. Check for violations of the internal imports rule.
  */
-class GosuInternalImportsRule extends GosuAbstractRule {
+class GosuInternalImportsRule extends AbstractGosuRule {
     String name = 'GosuInternalImports'
     String description = 'Internal imports rule. Check for usage of com.guidewire.* internal classes.'
     int priority = 3

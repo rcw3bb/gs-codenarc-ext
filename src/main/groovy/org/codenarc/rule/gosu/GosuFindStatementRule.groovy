@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil
 /**
  * Rule that checks for usage of the 'find' statement
  */
-class GosuFindStatementRule extends GosuAbstractRule {
+class GosuFindStatementRule extends AbstractGosuRule {
     String name = 'GosuFindStatement'
     String description = 'Lines of code which use the find statement, which can be performance intensive.'
     int priority = 1

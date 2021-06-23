@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil
 /**
 * Check for incorrect usage of checking for object equality by using Objects themselves instead of PublicID
 */
-class GosuGetCountUsageRule extends GosuAbstractRule {
+class GosuGetCountUsageRule extends AbstractGosuRule {
    String name = 'GosuGetCountUsage'
    String description = 'Incorrect usage of getCount() == 0'
    int priority = 3

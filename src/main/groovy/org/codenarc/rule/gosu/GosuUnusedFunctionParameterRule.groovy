@@ -22,12 +22,13 @@ import org.codenarc.util.gosu.GosuUtil
 /**
  * Rule that checks for unused function parameters in a function
  */
-class GosuUnusedFunctionParameterRule extends GosuAbstractRule {
+class GosuUnusedFunctionParameterRule extends AbstractGosuRule {
 
     String name = 'GosuUnusedFunctionParameter'
     String description = 'Unused function parameter within a Gosu function.'
     int priority = 2
 
+    @Override
     void gosuApplyTo(SourceCode sourceCode, List violations) {
         if (GosuUtil.isInterface(sourceCode)) {
             return

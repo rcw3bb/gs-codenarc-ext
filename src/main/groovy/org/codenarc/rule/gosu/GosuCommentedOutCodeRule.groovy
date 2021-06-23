@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil
 /**
  * Rule for identifying commented out code.
  */
-class GosuCommentedOutCodeRule extends GosuAbstractRule {
+class GosuCommentedOutCodeRule extends AbstractGosuRule {
 	String name = 'GosuCommentedOutCode'
 	String description = 'Check for commented out code.' 
 	int priority = 2

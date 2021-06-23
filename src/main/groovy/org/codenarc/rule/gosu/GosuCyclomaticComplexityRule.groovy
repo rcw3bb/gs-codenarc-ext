@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil
 /**
  * This class performs a basic complexity check of Gosu functions.
  */
-class GosuCyclomaticComplexityRule extends GosuAbstractRule {
+class GosuCyclomaticComplexityRule extends AbstractGosuRule {
 	
 	String name = 'GosuCyclomaticComplexity'
 	String description = 'Perform a standard cyclomatic complexity check.'
@@ -34,6 +34,7 @@ class GosuCyclomaticComplexityRule extends GosuAbstractRule {
 		List functions = GosuUtil.getFunctions(sourceCode)
 		
 		functions.each {
+			int lineNumber = it.startLineNumber
 			int complexityCount = 1
 			boolean withinBlockComment = false
 
@@ -49,9 +50,10 @@ class GosuCyclomaticComplexityRule extends GosuAbstractRule {
 					complexityCount += checkAdditionalComplexity(obj)
 				}
 				if (complexityCount > maxMethodComplexity) {
-					violations << createViolation(it.startLineNumber, null, "Function complexity exceeds maximum. Maximum allowed: ${maxMethodComplexity}, Actual: ${complexityCount}")
+					violations << createViolation(lineNumber, null, "Function complexity exceeds maximum. Maximum allowed: ${maxMethodComplexity}, Actual: ${complexityCount}")
 					break
 				}
+				lineNumber++
 			}
 		}
 	}

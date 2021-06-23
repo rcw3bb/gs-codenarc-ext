@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil
 /**
 * Check for incorrect usage of checking for object equality by using Objects themselves instead of PublicID
 */
-class GosuObjectEqualityRule extends GosuAbstractRule {
+class GosuObjectEqualityRule extends AbstractGosuRule {
    String name = 'GosuObjectEquality'
    String description = 'Incorrect usage of checking for object equality by using Objects themselves instead of PublicID'
    int priority = 1
