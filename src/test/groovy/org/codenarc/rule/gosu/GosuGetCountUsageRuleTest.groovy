@@ -61,4 +61,93 @@ class GosuGetCountUsageRuleTest extends GroovyTestCase {
         assert 3 == violations.size()
 
     }
-}
+
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+            if (allContacts.getCount() == 0) return null
+            //codenarc-disable GosuGetCountUsage
+            if (allContacts.getCount() == 0) return null
+            if (allContacts.getCount() == 0) return null
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 6 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuGetCountUsageRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+            if (allContacts.getCount() == 0) return null
+            //codenarc-disable GosuGetCountUsage
+            if (allContacts.getCount() == 0) return null
+            //codenarc-enable GosuGetCountUsage
+            if (allContacts.getCount() == 0) return null
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 7 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuGetCountUsageRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+            if (allContacts.getCount() == 0) return null
+            //codenarc-disable
+            if (allContacts.getCount() == 0) return null
+            if (allContacts.getCount() == 0) return null
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 6 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuGetCountUsageRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableEnableAll() {
+
+        def code = """
+            if (allContacts.getCount() == 0) return null
+            //codenarc-disable
+            if (allContacts.getCount() == 0) return null
+            //codenarc-enable
+            if (allContacts.getCount() == 0) return null
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 7 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuGetCountUsageRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+
+    }}

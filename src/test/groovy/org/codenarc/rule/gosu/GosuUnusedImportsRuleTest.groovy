@@ -93,6 +93,378 @@ class GosuUnusedImportsRuleTest extends GroovyTestCase {
         assert 2 == violations.size()
     }
 
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+            uses java.util.ArrayList;
+            uses java.util.ArrayList;
+            
+            //codenarc-disable GosuUnusedImports
+            
+            uses java.util.*;
+            uses java.lang.Long
+            uses org.foo.MyUtil
+            uses gw.plugin.addressbook.IAddressBookAdapter
+            uses com.guidewire.pl.web.controller.UserDisplayableException;
+                        
+            function anotherOne( n : Number ) : Number {
+                var plugin : IAddressBookAdapter = PluginRegistry.getPluginRegistry().getPlugin(com.guidewire.cc.plugin.addressbook.IAddressBookAdapter) as IAddressBookAdapter
+            
+            
+                static var user:String = "Guidewire Contact"
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                 _contactAPI = new soap.abintegration.api.IContactAPI();
+
+                 var util = MyUtil.doSomeMagic()
+                 throw new UserDisplayableException("Error converting contact from address book to claimcenter: " + e);
+            
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuUnusedImportsRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+            uses java.util.ArrayList;
+            //codenarc-disable GosuUnusedImports
+            uses java.util.ArrayList;
+            //codenarc-enable GosuUnusedImports
+            
+            uses java.util.*;
+            uses java.lang.Long
+            uses org.foo.MyUtil
+            uses gw.plugin.addressbook.IAddressBookAdapter
+            uses com.guidewire.pl.web.controller.UserDisplayableException;
+                        
+            function anotherOne( n : Number ) : Number {
+                var plugin : IAddressBookAdapter = PluginRegistry.getPluginRegistry().getPlugin(com.guidewire.cc.plugin.addressbook.IAddressBookAdapter) as IAddressBookAdapter
+            
+            
+                static var user:String = "Guidewire Contact"
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                 _contactAPI = new soap.abintegration.api.IContactAPI();
+
+                 var util = MyUtil.doSomeMagic()
+                 throw new UserDisplayableException("Error converting contact from address book to claimcenter: " + e);
+            
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuUnusedImportsRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+            uses java.util.ArrayList;
+            uses java.util.ArrayList;
+            
+            //codenarc-disable
+            
+            uses java.util.*;
+            uses java.lang.Long
+            uses org.foo.MyUtil
+            uses gw.plugin.addressbook.IAddressBookAdapter
+            uses com.guidewire.pl.web.controller.UserDisplayableException;
+                        
+            function anotherOne( n : Number ) : Number {
+                var plugin : IAddressBookAdapter = PluginRegistry.getPluginRegistry().getPlugin(com.guidewire.cc.plugin.addressbook.IAddressBookAdapter) as IAddressBookAdapter
+            
+            
+                static var user:String = "Guidewire Contact"
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                 _contactAPI = new soap.abintegration.api.IContactAPI();
+
+                 var util = MyUtil.doSomeMagic()
+                 throw new UserDisplayableException("Error converting contact from address book to claimcenter: " + e);
+            
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuUnusedImportsRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnableAll() {
+
+        def code = """
+            uses java.util.ArrayList;
+            //codenarc-disable
+            uses java.util.ArrayList;
+            //codenarc-enable
+            
+            uses java.util.*;
+            uses java.lang.Long
+            uses org.foo.MyUtil
+            uses gw.plugin.addressbook.IAddressBookAdapter
+            uses com.guidewire.pl.web.controller.UserDisplayableException;
+                        
+            function anotherOne( n : Number ) : Number {
+                var plugin : IAddressBookAdapter = PluginRegistry.getPluginRegistry().getPlugin(com.guidewire.cc.plugin.addressbook.IAddressBookAdapter) as IAddressBookAdapter
+            
+            
+                static var user:String = "Guidewire Contact"
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+
+                                      }
+                                  }
+                              }
+                          }
+                      }
+                  }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                 _contactAPI = new soap.abintegration.api.IContactAPI();
+
+                 var util = MyUtil.doSomeMagic()
+                 throw new UserDisplayableException("Error converting contact from address book to claimcenter: " + e);
+            
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuUnusedImportsRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+    }
+
     void testApplyToNoViolations() {
         def code = """
             uses util.TranslationObject.ClaimTO

@@ -66,6 +66,105 @@ class GosuUnusedFunctionParameterRuleTest extends GroovyTestCase {
         assert 0 == violations.size()
     }
 
+    void testApplyToWithNoViolationsOnFunctionDisable() {
+
+        def code = """
+			public function square( n : Number, b : int ) : Number {
+			  return n * n
+			}
+			
+			//codenarc-disable GosuUnusedFunctionParameter
+			public function square2( n : Number, b : int ) : Number {
+			  return n * n
+			}
+		"""
+
+        def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithNoViolationsOnFunctionDisable"
+
+        def violations = []
+
+        def rule = new GosuUnusedFunctionParameterRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithNoViolationsOnFunctionDisableEnable() {
+
+        def code = """
+			//codenarc-disable GosuUnusedFunctionParameter
+			public function square( n : Number, b : int ) : Number {
+			  return n * n
+			}
+			
+			//codenarc-enable GosuUnusedFunctionParameter
+			public function square2( n : Number, b : int ) : Number {
+			  return n * n
+			}
+		"""
+
+        def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithNoViolationsOnFunctionDisableEnable"
+
+        def violations = []
+
+        def rule = new GosuUnusedFunctionParameterRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithNoViolationsOnFunctionDisableAll() {
+
+        def code = """
+			public function square( n : Number, b : int ) : Number {
+			  return n * n
+			}
+			
+			//codenarc-disable
+			public function square2( n : Number, b : int ) : Number {
+			  return n * n
+			}
+		"""
+
+        def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithNoViolationsOnFunctionDisableAll"
+
+        def violations = []
+
+        def rule = new GosuUnusedFunctionParameterRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithNoViolationsOnFunctionDisableEnableAll() {
+
+        def code = """
+			//codenarc-disable
+			public function square( n : Number, b : int ) : Number {
+			  return n * n
+			}
+			
+			//codenarc-enable
+			public function square2( n : Number, b : int ) : Number {
+			  return n * n
+			}
+		"""
+
+        def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithNoViolationsOnFunctionDisableEnableAll"
+
+        def violations = []
+
+        def rule = new GosuUnusedFunctionParameterRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+
     void testApplyToViolatingFunctionParamOnSingleLine() {
 
         def code = """

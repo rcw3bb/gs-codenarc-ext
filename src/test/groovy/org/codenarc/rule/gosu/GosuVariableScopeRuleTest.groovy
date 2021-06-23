@@ -49,6 +49,63 @@ class GosuVariableScopeRuleTest extends GroovyTestCase {
         assert 4 == violations.size()
     }
 
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+            var claims = filteredClaims.iterator().toArray() as Claim[];
+            var claims session = filteredClaims.iterator().toArray() as Claim[];
+            var claims request = filteredClaims.iterator().toArray() as Claim[];
+            var blah : String
+            //codenarc-disable GosuVariableScope
+            //var pmtConfMsg session : String = "";
+            var foo request : int
+            var pmtConfMsg session : String = "";            
+            private static function isAllEmptyGetServiceSummary(request : GetServiceSummaryRequest) : boolean {
+                Logger.logInfo("Created Log Statement")
+            }
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 13 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuVariableScopeRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+            //codenarc-disable GosuVariableScope
+            var claims = filteredClaims.iterator().toArray() as Claim[];
+            var claims session = filteredClaims.iterator().toArray() as Claim[];
+            var claims request = filteredClaims.iterator().toArray() as Claim[];
+            var blah : String
+            //codenarc-enable GosuVariableScope
+            //var pmtConfMsg session : String = "";
+            var foo request : int
+            var pmtConfMsg session : String = "";            
+            private static function isAllEmptyGetServiceSummary(request : GetServiceSummaryRequest) : boolean {
+                Logger.logInfo("Created Log Statement")
+            }
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 14 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuVariableScopeRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+    }
+
     void testApplyToNoViolations() {
 
         def code = """

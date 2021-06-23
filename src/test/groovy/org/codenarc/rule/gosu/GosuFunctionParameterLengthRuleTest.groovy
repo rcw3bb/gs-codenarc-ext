@@ -157,4 +157,279 @@ class GosuFunctionParameterLengthRuleTest extends GroovyTestCase {
         assert 3 == violations.size()
     }
 
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+        function square( n : Number ) : Number {
+          return n * n
+          /*
+              * if () {
+              * }
+              */
+        }
+        
+        //function square( n : Number ) : Number {
+        //  return n * n
+        //}
+        
+        /* 
+        function anotherOne( n : Number ) : Number {
+          //return n * n
+          /*
+          * if () {
+          * }
+          */
+        }
+        */
+        
+        function anotherOne( n : Number, str : String, num : Integer ) : Number {
+          return n * n
+        }
+
+        //codenarc-disable GosuFunctionParameterLength            
+        function anotherOne( n : Number, name : String, description : String ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+        function anotherOne( n : Number, name : String, description : String, i : Integer ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+        function anotherOne( n : Number ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+    """
+
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisable")
+
+        def violations = []
+
+        def rule = new GosuFunctionParameterLengthRule()
+        rule.maxParameters = 2
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+        function square( n : Number ) : Number {
+          return n * n
+          /*
+              * if () {
+              * }
+              */
+        }
+        
+        //function square( n : Number ) : Number {
+        //  return n * n
+        //}
+        
+        /* 
+        function anotherOne( n : Number ) : Number {
+          //return n * n
+          /*
+          * if () {
+          * }
+          */
+        }
+        */
+        
+        function anotherOne( n : Number, str : String, num : Integer ) : Number {
+          return n * n
+        }
+
+        //codenarc-disable GosuFunctionParameterLength            
+        function anotherOne( n : Number, name : String, description : String ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+        //codenarc-enable GosuFunctionParameterLength
+        function anotherOne( n : Number, name : String, description : String, i : Integer ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+        function anotherOne( n : Number ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+    """
+
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisableEnable")
+
+        def violations = []
+
+        def rule = new GosuFunctionParameterLengthRule()
+        rule.maxParameters = 2
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+        function square( n : Number ) : Number {
+          return n * n
+          /*
+              * if () {
+              * }
+              */
+        }
+        
+        //function square( n : Number ) : Number {
+        //  return n * n
+        //}
+        
+        /* 
+        function anotherOne( n : Number ) : Number {
+          //return n * n
+          /*
+          * if () {
+          * }
+          */
+        }
+        */
+        
+        function anotherOne( n : Number, str : String, num : Integer ) : Number {
+          return n * n
+        }
+
+        //codenarc-disable             
+        function anotherOne( n : Number, name : String, description : String ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+        function anotherOne( n : Number, name : String, description : String, i : Integer ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+        function anotherOne( n : Number ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+    """
+
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisable")
+
+        def violations = []
+
+        def rule = new GosuFunctionParameterLengthRule()
+        rule.maxParameters = 2
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnableAll() {
+
+        def code = """
+        function square( n : Number ) : Number {
+          return n * n
+          /*
+              * if () {
+              * }
+              */
+        }
+        
+        //function square( n : Number ) : Number {
+        //  return n * n
+        //}
+        
+        /* 
+        function anotherOne( n : Number ) : Number {
+          //return n * n
+          /*
+          * if () {
+          * }
+          */
+        }
+        */
+        
+        function anotherOne( n : Number, str : String, num : Integer ) : Number {
+          return n * n
+        }
+
+        //codenarc-disable            
+        function anotherOne( n : Number, name : String, description : String ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+        //codenarc-enable
+        function anotherOne( n : Number, name : String, description : String, i : Integer ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+        function anotherOne( n : Number ) : Number {
+              // print something
+              // {
+              /* AA */
+              int i = 0
+              return n * n
+        }
+        
+    """
+
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisableEnableAll")
+
+        def violations = []
+
+        def rule = new GosuFunctionParameterLengthRule()
+        rule.maxParameters = 2
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+    }
+
+
 }

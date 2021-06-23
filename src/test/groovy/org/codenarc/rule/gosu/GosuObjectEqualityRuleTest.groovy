@@ -62,4 +62,95 @@ class GosuObjectEqualityRuleTest extends GroovyTestCase {
         assert 3 == violations.size()
 
     }
+
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+            if (grp.Group == Group( "cc:139" /* Compliance & Ops Risk */ )) {
+            if (grp.Group==Group("cc:139" /* Compliance & Ops Risk */ )) {
+            //codenarc-disable GosuObjectEquality
+            if (grp.Group == Group ( "cc:139" /* Compliance & Ops Risk */ )) {
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 6 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuObjectEqualityRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+            if (grp.Group == Group( "cc:139" /* Compliance & Ops Risk */ )) {
+            //codenarc-disable GosuObjectEquality
+            if (grp.Group==Group("cc:139" /* Compliance & Ops Risk */ )) {
+            //codenarc-enable GosuObjectEquality
+            if (grp.Group == Group ( "cc:139" /* Compliance & Ops Risk */ )) {
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 7 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuObjectEqualityRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+            if (grp.Group == Group( "cc:139" /* Compliance & Ops Risk */ )) {
+            if (grp.Group==Group("cc:139" /* Compliance & Ops Risk */ )) {
+            //codenarc-disable
+            if (grp.Group == Group ( "cc:139" /* Compliance & Ops Risk */ )) {
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 6 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuObjectEqualityRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableEnableAll() {
+
+        def code = """
+            if (grp.Group == Group( "cc:139" /* Compliance & Ops Risk */ )) {
+            //codenarc-disable
+            if (grp.Group==Group("cc:139" /* Compliance & Ops Risk */ )) {
+            //codenarc-enable
+            if (grp.Group == Group ( "cc:139" /* Compliance & Ops Risk */ )) {
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 7 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuObjectEqualityRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+
+    }
+
 }

@@ -121,7 +121,69 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
     assert 2 == violations.size()
   }
 
-  /** Expected to fail so assert commented out for now */  
+    void testApplyToVarDefsDisabled() {
+        def code = """
+            //codenarc-disable GosuCommentedOutCode
+    		// var myVar = yetAnotherVar
+        // var mySecondVar : SecondVar
+    """
+
+        def sourceCode = new SourceString(code)
+        def violations = []
+        def rule = new GosuCommentedOutCodeRule()
+        rule.applyTo(sourceCode, violations)
+        println violations.size()
+        assert 0 == violations.size()
+    }
+
+    void testApplyToVarDefsDisabledEnabled() {
+        def code = """
+            //codenarc-disable GosuCommentedOutCode
+    		// var myVar = yetAnotherVar
+    		//codenarc-enable GosuCommentedOutCode
+        // var mySecondVar : SecondVar
+    """
+
+        def sourceCode = new SourceString(code)
+        def violations = []
+        def rule = new GosuCommentedOutCodeRule()
+        rule.applyTo(sourceCode, violations)
+        println violations.size()
+        assert 1 == violations.size()
+    }
+
+    void testApplyToVarDefsDisabledAll() {
+        def code = """
+            //codenarc-disable
+    		// var myVar = yetAnotherVar
+        // var mySecondVar : SecondVar
+    """
+
+        def sourceCode = new SourceString(code)
+        def violations = []
+        def rule = new GosuCommentedOutCodeRule()
+        rule.applyTo(sourceCode, violations)
+        println violations.size()
+        assert 0 == violations.size()
+    }
+
+    void testApplyToVarDefsDisabledEnabledAll() {
+        def code = """
+            //codenarc-disable
+    		// var myVar = yetAnotherVar
+    		//codenarc-enable
+        // var mySecondVar : SecondVar
+    """
+
+        def sourceCode = new SourceString(code)
+        def violations = []
+        def rule = new GosuCommentedOutCodeRule()
+        rule.applyTo(sourceCode, violations)
+        println violations.size()
+        assert 1 == violations.size()
+    }
+
+    /** Expected to fail so assert commented out for now */
   void testShouldNotApplyToVarDefs() {
     def code = """
       // this stuff : should not pick up var

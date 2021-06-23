@@ -225,6 +225,171 @@ class GosuCyclomaticComplexityRuleTest extends GroovyTestCase {
         assert 4 == violations.size()
     }
 
+    void testApplyToWithViolationsConditionalOperatorDisable() {
+        def code = """
+            function conditionalOrOne( n : Number ) : Number {
+                if (true || true) {
+                
+                }
+            }
+
+        //codenarc-disable GosuCyclomaticComplexity
+      function anotherOrTwo( n : Number ) : Number {
+        if (true or true) {
+        
+        }
+        }
+
+      function conditionalAndOne( n : Number ) : Number {
+        if (true && true) {
+        
+        }
+        }
+
+      function anotherAndTwo( n : Number ) : Number {
+        if (true and true) {
+        
+        }
+        }
+            """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsConditionalOperatorDisable")
+
+        def violations = []
+
+        def rule = new GosuCyclomaticComplexityRule()
+        rule.maxMethodComplexity = 2
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsConditionalOperatorDisableEnable() {
+        def code = """
+            function conditionalOrOne( n : Number ) : Number {
+                if (true || true) {
+                
+                }
+            }
+
+        //codenarc-disable GosuCyclomaticComplexity
+      function anotherOrTwo( n : Number ) : Number {
+        if (true or true) {
+        
+        }
+        }
+
+      //codenarc-enable GosuCyclomaticComplexity
+
+      function conditionalAndOne( n : Number ) : Number {
+        if (true && true) {
+        
+        }
+        }
+
+      function anotherAndTwo( n : Number ) : Number {
+        if (true and true) {
+        
+        }
+        }
+            """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsConditionalOperatorDisableEnable")
+
+        def violations = []
+
+        def rule = new GosuCyclomaticComplexityRule()
+        rule.maxMethodComplexity = 2
+        rule.applyTo(sourceCode, violations)
+
+        assert 3 == violations.size()
+    }
+
+    void testApplyToWithViolationsConditionalOperatorDisableAll() {
+        def code = """
+            function conditionalOrOne( n : Number ) : Number {
+                if (true || true) {
+                
+                }
+            }
+
+        //codenarc-disable
+      function anotherOrTwo( n : Number ) : Number {
+        if (true or true) {
+        
+        }
+        }
+
+      function conditionalAndOne( n : Number ) : Number {
+        if (true && true) {
+        
+        }
+        }
+
+      function anotherAndTwo( n : Number ) : Number {
+        if (true and true) {
+        
+        }
+        }
+            """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsConditionalOperatorDisableAll")
+
+        def violations = []
+
+        def rule = new GosuCyclomaticComplexityRule()
+        rule.maxMethodComplexity = 2
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsConditionalOperatorDisableEnableAll() {
+        def code = """
+            function conditionalOrOne( n : Number ) : Number {
+                if (true || true) {
+                
+                }
+            }
+
+        //codenarc-disable
+      function anotherOrTwo( n : Number ) : Number {
+        if (true or true) {
+        
+        }
+        }
+
+      //codenarc-enable
+
+      function conditionalAndOne( n : Number ) : Number {
+        if (true && true) {
+        
+        }
+        }
+
+      function anotherAndTwo( n : Number ) : Number {
+        if (true and true) {
+        
+        }
+        }
+            """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsConditionalOperatorDisableEnableAll")
+
+        def violations = []
+
+        def rule = new GosuCyclomaticComplexityRule()
+        rule.maxMethodComplexity = 2
+        rule.applyTo(sourceCode, violations)
+
+        assert 3 == violations.size()
+    }
+
+
     void testApplyToWithViolationsTernaryConditional() {
         def code = """
             function anotherOne( n : Number ) : Number {

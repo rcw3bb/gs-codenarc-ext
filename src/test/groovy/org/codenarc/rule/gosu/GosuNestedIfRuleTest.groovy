@@ -187,4 +187,333 @@ class GosuNestedIfRuleTest extends GroovyTestCase {
 
         assert 0 == violations.size()
     }
+
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+            function square( n : Number ) : Number {
+              return n * n
+              /*
+                  * if () {
+                  * }
+                  */
+            }
+            
+            //function square( n : Number ) : Number {
+            //  return n * n
+            //}
+            
+            /* 
+            function anotherOne( n : Number ) : Number {
+              //return n * n
+              /*
+              * if () {
+              * }
+              */
+            }
+            */
+                        
+            function anotherOne( n : Number ) : Number {
+              if(something) {
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                          
+                                  }
+                              }
+                          }
+                      }    
+                  }
+              }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            
+            function anotherOne( n : Number ) : Number {
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              
+                          }    
+                      } else {
+                      
+                       }
+                  }
+            }
+            
+            //codenarc-disable GosuNestedIf
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuNestedIfRule()
+        rule.maxNestedDepth = 4
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+            function square( n : Number ) : Number {
+              return n * n
+              /*
+                  * if () {
+                  * }
+                  */
+            }
+            
+            //function square( n : Number ) : Number {
+            //  return n * n
+            //}
+            
+            /* 
+            function anotherOne( n : Number ) : Number {
+              //return n * n
+              /*
+              * if () {
+              * }
+              */
+            }
+            */
+                        
+            function anotherOne( n : Number ) : Number {
+              if(something) {
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                          
+                                  }
+                              }
+                          }
+                      }    
+                  }
+              }
+            }
+            
+            //codenarc-disable GosuNestedIf
+            function anotherOne( n : Number ) : Number {
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            //codenarc-enable
+            
+            function anotherOne( n : Number ) : Number {
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              
+                          }    
+                      } else {
+                      
+                       }
+                  }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuNestedIfRule()
+        rule.maxNestedDepth = 4
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+            function square( n : Number ) : Number {
+              return n * n
+              /*
+                  * if () {
+                  * }
+                  */
+            }
+            
+            //function square( n : Number ) : Number {
+            //  return n * n
+            //}
+            
+            /* 
+            function anotherOne( n : Number ) : Number {
+              //return n * n
+              /*
+              * if () {
+              * }
+              */
+            }
+            */
+                        
+            function anotherOne( n : Number ) : Number {
+              if(something) {
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                          
+                                  }
+                              }
+                          }
+                      }    
+                  }
+              }
+            }
+            
+            //codenarc-disable
+            function anotherOne( n : Number ) : Number {
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            //codenarc-enable
+            
+            function anotherOne( n : Number ) : Number {
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              
+                          }    
+                      } else {
+                      
+                       }
+                  }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuNestedIfRule()
+        rule.maxNestedDepth = 4
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+    }
 }

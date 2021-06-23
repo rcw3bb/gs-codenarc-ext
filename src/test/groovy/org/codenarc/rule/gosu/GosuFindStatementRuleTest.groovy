@@ -60,4 +60,145 @@ class GosuFindStatementRuleTest extends GroovyTestCase {
         assert 1 == violations.size()
 
     }
+
+    void testApplyToWithViolationsMultiFind() {
+
+        def code = """
+            // Get misc. accounts
+            var accounts = find (acc  IN Account
+                               WHERE acc.AccountNumber != "Unassigned"
+                                 AND acc.Status == "Draft")
+                                 
+            var accounts2 = find (acc  IN Account
+                               WHERE acc.AccountNumber != "Unassigned"
+                                 AND acc.Status == "Draft")
+
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 11 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuFindStatementRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 2 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsMultiFindDisable() {
+
+        def code = """
+            // Get misc. accounts
+            var accounts = find (acc  IN Account
+                               WHERE acc.AccountNumber != "Unassigned"
+                                 AND acc.Status == "Draft")
+                                 
+            //codenarc-disable GosuFindStatement
+            var accounts2 = find (acc  IN Account 
+                               WHERE acc.AccountNumber != "Unassigned"
+                                 AND acc.Status == "Draft")
+
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 12 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuFindStatementRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsMultiFindDisableEnable() {
+
+        def code = """
+            //codenarc-disable GosuFindStatement
+            // Get misc. accounts
+            var accounts = find (acc  IN Account
+                               WHERE acc.AccountNumber != "Unassigned"
+                                 AND acc.Status == "Draft")
+            
+            //codenarc-enable GosuFindStatement                     
+            var accounts2 = find (acc  IN Account
+                               WHERE acc.AccountNumber != "Unassigned"
+                                 AND acc.Status == "Draft")
+
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 13 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuFindStatementRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsMultiFindDisableAll() {
+
+        def code = """
+            // Get misc. accounts
+            var accounts = find (acc  IN Account
+                               WHERE acc.AccountNumber != "Unassigned"
+                                 AND acc.Status == "Draft")
+                                 
+            //codenarc-disable
+            var accounts2 = find (acc  IN Account 
+                               WHERE acc.AccountNumber != "Unassigned"
+                                 AND acc.Status == "Draft")
+
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 12 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuFindStatementRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsMultiFindDisableEnableAll() {
+
+        def code = """
+            //codenarc-disable
+            // Get misc. accounts
+            var accounts = find (acc  IN Account
+                               WHERE acc.AccountNumber != "Unassigned"
+                                 AND acc.Status == "Draft")
+            
+            //codenarc-enable                     
+            var accounts2 = find (acc  IN Account
+                               WHERE acc.AccountNumber != "Unassigned"
+                                 AND acc.Status == "Draft")
+
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 13 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuFindStatementRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
 }

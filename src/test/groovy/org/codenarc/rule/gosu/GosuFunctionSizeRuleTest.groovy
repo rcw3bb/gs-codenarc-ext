@@ -126,4 +126,220 @@ class GosuFunctionSizeRuleTest extends GroovyTestCase {
 
         assert 2 == violations.size()
     }
+
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+            //codenarc-disable GosuFunctionSize
+            function square( n : Number ) : Number {
+              return n * n
+              /*
+                  * if () {
+                  * }
+                  */
+            }
+            
+            //function square( n : Number ) : Number {
+            //  return n * n
+            //}
+            
+            /* 
+            function anotherOne( n : Number ) : Number {
+              //return n * n
+              /*
+              * if () {
+              * }
+              */
+            }
+            */
+            
+            function anotherOne( n : Number ) : Number {
+              return n * n;
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                  // print something
+                  // {
+                  /* AA */
+                  int i = 0
+                  return n * n
+            }
+            
+        """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisable")
+
+        def violations = []
+
+        def rule = new GosuFunctionSizeRule()
+        rule.maxLines = 4
+        rule.applyTo(sourceCode, violations)
+
+        assert 0 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+            //codenarc-disable GosuFunctionSize
+            function square( n : Number ) : Number {
+              return n * n
+              /*
+                  * if () {
+                  * }
+                  */
+            }
+            
+            //function square( n : Number ) : Number {
+            //  return n * n
+            //}
+
+            //codenarc-enable GosuFunctionSize
+            
+            /* 
+            function anotherOne( n : Number ) : Number {          
+              //return n * n
+              /*
+              * if () {
+              * }
+              */
+            }
+            */
+            
+            
+            function anotherOne( n : Number ) : Number {
+              //codenarc-enable GosuFunctionSize
+              return n * n;
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                  // print something
+                  // {
+                  /* AA */
+                  int i = 0
+                  return n * n
+            }
+            
+        """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisableEnable")
+
+        def violations = []
+
+        def rule = new GosuFunctionSizeRule()
+        rule.maxLines = 4
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+            //codenarc-disable
+            function square( n : Number ) : Number {
+              return n * n
+              /*
+                  * if () {
+                  * }
+                  */
+            }
+            
+            //function square( n : Number ) : Number {
+            //  return n * n
+            //}
+            
+            /* 
+            function anotherOne( n : Number ) : Number {
+              //return n * n
+              /*
+              * if () {
+              * }
+              */
+            }
+            */
+            
+            function anotherOne( n : Number ) : Number {
+              return n * n;
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                  // print something
+                  // {
+                  /* AA */
+                  int i = 0
+                  return n * n
+            }
+            
+        """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisableAll")
+
+        def violations = []
+
+        def rule = new GosuFunctionSizeRule()
+        rule.maxLines = 4
+        rule.applyTo(sourceCode, violations)
+
+        assert 0 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnableAll() {
+
+        def code = """
+            //codenarc-disable
+            function square( n : Number ) : Number {
+              return n * n
+              /*
+                  * if () {
+                  * }
+                  */
+            }
+            
+            //function square( n : Number ) : Number {
+            //  return n * n
+            //}
+
+            //codenarc-enable
+            
+            /* 
+            function anotherOne( n : Number ) : Number {          
+              //return n * n
+              /*
+              * if () {
+              * }
+              */
+            }
+            */
+            
+            
+            function anotherOne( n : Number ) : Number {
+              //codenarc-enable GosuFunctionSize
+              return n * n;
+            }
+            
+            function anotherOne( n : Number ) : Number {
+                  // print something
+                  // {
+                  /* AA */
+                  int i = 0
+                  return n * n
+            }
+            
+        """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisableEnableAll")
+
+        def violations = []
+
+        def rule = new GosuFunctionSizeRule()
+        rule.maxLines = 4
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
 }

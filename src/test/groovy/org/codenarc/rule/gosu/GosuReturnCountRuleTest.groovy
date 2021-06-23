@@ -22,7 +22,7 @@ import org.codenarc.util.gosu.GosuUtil
 /**
  * Max return statement count rule tests
  */
-class GosuReturnCountRuleTest {
+class GosuReturnCountRuleTest extends GroovyTestCase {
 
     void testApplyToNoViolations() {
 
@@ -82,4 +82,141 @@ class GosuReturnCountRuleTest {
         assert 2 == violations.size()
     }
 
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+            function anotherOne( n : Number ) : Number {
+              if (true) {
+                  return true
+              } else {
+                  return false
+              }
+            }
+            
+            //codenarc-disable GosuReturnCount
+            function anotherOne( n : Number ) : Number 
+            {
+              if (true) {
+                  return true
+              } else {
+                  return false
+              }
+            }
+        """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisable")
+
+        def violations = []
+
+        def rule = new GosuReturnCountRule()
+        rule.maxReturnCount = 1
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+            //codenarc-disable GosuReturnCount
+            function anotherOne( n : Number ) : Number {
+              if (true) {
+                  return true
+              } else {
+                  return false
+              }
+            }
+            //codenarc-enable GosuReturnCount
+            
+            function anotherOne( n : Number ) : Number 
+            {
+              if (true) {
+                  return true
+              } else {
+                  return false
+              }
+            }
+        """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisableEnable")
+
+        def violations = []
+
+        def rule = new GosuReturnCountRule()
+        rule.maxReturnCount = 1
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+            function anotherOne( n : Number ) : Number {
+              if (true) {
+                  return true
+              } else {
+                  return false
+              }
+            }
+            
+            //codenarc-disable
+            function anotherOne( n : Number ) : Number 
+            {
+              if (true) {
+                  return true
+              } else {
+                  return false
+              }
+            }
+        """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisableAll")
+
+        def violations = []
+
+        def rule = new GosuReturnCountRule()
+        rule.maxReturnCount = 1
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnableAll() {
+
+        def code = """
+            //codenarc-disable
+            function anotherOne( n : Number ) : Number {
+              if (true) {
+                  return true
+              } else {
+                  return false
+              }
+            }
+            //codenarc-enable
+            
+            function anotherOne( n : Number ) : Number 
+            {
+              if (true) {
+                  return true
+              } else {
+                  return false
+              }
+            }
+        """
+        GosuUtil.clearCache()
+        def sourceCode = new SourceString(code)
+        sourceCode.setPath("testApplyToWithViolationsDisableEnableAll")
+
+        def violations = []
+
+        def rule = new GosuReturnCountRule()
+        rule.maxReturnCount = 1
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
 }

@@ -15,6 +15,7 @@
  */
 package org.codenarc.rule.gosu
 
+import org.codenarc.rule.Violation
 import org.codenarc.source.SourceString
 
 /**
@@ -71,4 +72,114 @@ class GosuClassSizeRuleTest extends GroovyTestCase {
         assert 1 == violations.size()
 
     }
+
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+            //codenarc-disable GosuClassSize
+            int lineCount = 0
+            //comment 
+            sourceCode.getLines().each {
+                if (it) {
+                    lineCount++
+                }
+            }        
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 10 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuClassSizeRule(maxLines: 6)
+        rule.applyTo(sourceCode, violations)
+
+        assert 0 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableAndEnabled() {
+
+        def code = """
+            //codenarc-disable GosuClassSize
+            int lineCount = 0
+            //comment 
+            sourceCode.getLines().each {
+                if (it) {
+                    lineCount++
+                    //codenarc-enable GosuClassSize
+                }
+            }
+            print("something")
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 12 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuClassSizeRule(maxLines: 6)
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+            //codenarc-disable
+            int lineCount = 0
+            //comment 
+            sourceCode.getLines().each {
+                if (it) {
+                    lineCount++
+                }
+            }        
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 10 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuClassSizeRule(maxLines: 6)
+        rule.applyTo(sourceCode, violations)
+
+        assert 0 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableAndEnabledAll() {
+
+        def code = """
+            //codenarc-disable GosuClassSize
+            int lineCount = 0
+            //comment 
+            sourceCode.getLines().each {
+                if (it) {
+                    lineCount++
+                    //codenarc-enable
+                }
+            }
+            print("something")
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 12 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuClassSizeRule(maxLines: 6)
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
+
+
 }

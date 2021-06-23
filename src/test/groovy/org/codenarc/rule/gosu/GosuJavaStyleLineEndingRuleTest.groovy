@@ -61,4 +61,94 @@ class GosuJavaStyleLineEndingRuleTest extends GroovyTestCase {
         assert 2 == violations.size()
 
     }
+
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+            if (someList.getCount() == 0) return null
+            if (someList.getCount()==0) return null;
+            //codenarc-disable GosuJavaStyleLineEnding
+            if (someList.getCount ( )==0) return null;
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 6 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuJavaStyleLineEndingRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+            if (someList.getCount() == 0) return null
+            //codenarc-disable GosuJavaStyleLineEnding
+            if (someList.getCount()==0) return null;
+            //codenarc-enable GosuJavaStyleLineEnding
+            if (someList.getCount ( )==0) return null;
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 7 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuJavaStyleLineEndingRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+            if (someList.getCount() == 0) return null
+            if (someList.getCount()==0) return null;
+            //codenarc-disable
+            if (someList.getCount ( )==0) return null;
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 6 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuJavaStyleLineEndingRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
+
+    void testApplyToWithViolationsDisableEnableAll() {
+
+        def code = """
+            if (someList.getCount() == 0) return null
+            //codenarc-disable
+            if (someList.getCount()==0) return null;
+            //codenarc-enable
+            if (someList.getCount ( )==0) return null;
+        """
+
+        def sourceCode = new SourceString(code)
+
+        assert 7 == sourceCode.getLines().size()
+
+        def violations = []
+
+        def rule = new GosuJavaStyleLineEndingRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+
+    }
 }

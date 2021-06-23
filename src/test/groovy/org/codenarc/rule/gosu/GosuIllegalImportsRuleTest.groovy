@@ -105,8 +105,6 @@ class GosuIllegalImportsRuleTest extends GroovyTestCase {
         def rule = new GosuIllegalImportsRule()
         rule.applyTo(sourceCode, violations)
 
-
-
         assert 2 == violations.size()
     }
 
@@ -143,4 +141,429 @@ class GosuIllegalImportsRuleTest extends GroovyTestCase {
         assert 0 == violations.size()
     }
 
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+            uses java.util.ArrayList;
+            //codenarc-disable GosuIllegalImports
+            uses java.util.ArrayList;
+            uses java.util.*;
+            uses java.lang.Long
+            uses gw.plugin.addressbook.IAddressBookAdapter
+            uses com.guidewire.pl.web.controller.UserDisplayableException;
+
+            function anotherOne( n : Number ) : Number {
+            
+              var list : ArrayList<String> = {"test1", "test2"}
+            
+            
+              static var name : String = list[0]
+              if(something) {
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                          
+                                  }
+                              }
+                          }
+                      }    
+                  }
+              }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            
+            
+            
+            
+            function anotherOne( n : Number ) : Number {
+
+                return null
+            
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              
+                          }    
+                      } else {
+                      
+                       }
+                  }
+            }
+            
+
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuIllegalImportsRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 0 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+            uses java.util.ArrayList;
+            //codenarc-disable GosuIllegalImports
+            uses java.util.ArrayList;
+            //codenarc-enable GosuIllegalImports
+            uses java.util.*;
+            uses java.lang.Long
+            uses gw.plugin.addressbook.IAddressBookAdapter
+            uses com.guidewire.pl.web.controller.UserDisplayableException;
+
+            function anotherOne( n : Number ) : Number {
+            
+              var list : ArrayList<String> = {"test1", "test2"}
+            
+            
+              static var name : String = list[0]
+              if(something) {
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                          
+                                  }
+                              }
+                          }
+                      }    
+                  }
+              }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            
+            
+            
+            
+            function anotherOne( n : Number ) : Number {
+
+                return null
+            
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              
+                          }    
+                      } else {
+                      
+                       }
+                  }
+            }
+            
+
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuIllegalImportsRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+            uses java.util.ArrayList;
+            //codenarc-disable
+            uses java.util.ArrayList;
+            uses java.util.*;
+            uses java.lang.Long
+            uses gw.plugin.addressbook.IAddressBookAdapter
+            uses com.guidewire.pl.web.controller.UserDisplayableException;
+
+            function anotherOne( n : Number ) : Number {
+            
+              var list : ArrayList<String> = {"test1", "test2"}
+            
+            
+              static var name : String = list[0]
+              if(something) {
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                          
+                                  }
+                              }
+                          }
+                      }    
+                  }
+              }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            
+            
+            
+            
+            function anotherOne( n : Number ) : Number {
+
+                return null
+            
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              
+                          }    
+                      } else {
+                      
+                       }
+                  }
+            }
+            
+
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuIllegalImportsRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 0 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnableAll() {
+
+        def code = """
+            uses java.util.ArrayList;
+            //codenarc-disable
+            uses java.util.ArrayList;
+            //codenarc-enable
+            uses java.util.*;
+            uses java.lang.Long
+            uses gw.plugin.addressbook.IAddressBookAdapter
+            uses com.guidewire.pl.web.controller.UserDisplayableException;
+
+            function anotherOne( n : Number ) : Number {
+            
+              var list : ArrayList<String> = {"test1", "test2"}
+            
+            
+              static var name : String = list[0]
+              if(something) {
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                          
+                                  }
+                              }
+                          }
+                      }    
+                  }
+              }
+            }
+            
+            function anotherOne( n : Number ) : Number {
+
+                  if(something) {
+                      if(something) {
+                          
+                      }
+                  } else {
+                      if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                          if(something) {
+                                                  
+                                          }    
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                  }
+                }
+            
+            
+            
+            
+            function anotherOne( n : Number ) : Number {
+
+                return null
+            
+                  if(something) {
+                      if(something) {
+                          if(something) {
+                              
+                          }    
+                      } else {
+                      
+                       }
+                  }
+            }
+            
+
+            function anotherOne( n : Number ) : Number {
+                 if(something) {
+                      
+                 } else {
+                     if(something) {
+                          if(something) {
+                              if(something) {
+                                  if(something) {
+                                      if(something) {
+                                        if(something) {
+              
+                                          }
+                                      }
+                                  }
+                              }
+                          }    
+                      }
+                 }
+            }
+            
+        """
+
+        def sourceCode = new SourceString(code)
+
+        def violations = []
+
+        def rule = new GosuIllegalImportsRule()
+        rule.applyTo(sourceCode, violations)
+
+        assert 1 == violations.size()
+    }
 }

@@ -106,6 +106,7 @@ class GosuUnusedPrivateFunctionRuleTest extends GroovyTestCase {
 		"""
 
         def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithInlineCommentedOutViolations"
 
         def violations = []
 
@@ -130,6 +131,7 @@ class GosuUnusedPrivateFunctionRuleTest extends GroovyTestCase {
 		"""
 
         def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithBlockCommentedOutViolations"
 
         def violations = []
 
@@ -154,6 +156,7 @@ class GosuUnusedPrivateFunctionRuleTest extends GroovyTestCase {
 		"""
 
         def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithBlockCommentedOnSingleLineOutViolations"
 
         def violations = []
 
@@ -169,17 +172,132 @@ class GosuUnusedPrivateFunctionRuleTest extends GroovyTestCase {
                 return n * n
             }
 
+		    private function square2( n : Number ) : Number {
+                return n * n
+            }
+
             function foo() {
                 bar(4)
             }
 		"""
 		
 		def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithViolations14"
 		
 		def violations = []
 		
 		def rule = new GosuUnusedPrivateFunctionRule()
 		rule.applyTo(sourceCode, violations)
-		assert 1 == violations.size()
+		assert 2 == violations.size()
 	}
+
+    void testApplyToWithViolationsDisable() {
+
+        def code = """
+		    private function square( n : Number ) : Number {
+                return n * n
+            }
+
+            //codenarc-disable GosuUnusedFunctionMethod
+		    private function squar2( n : Number ) : Number {
+                return n * n
+            }
+
+            function foo() {
+                bar(4)
+            }
+		"""
+
+        def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithViolationsDisable"
+
+        def violations = []
+
+        def rule = new GosuUnusedPrivateFunctionRule()
+        rule.applyTo(sourceCode, violations)
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnable() {
+
+        def code = """
+            //codenarc-disable GosuUnusedFunctionMethod
+		    private function square1( n : Number ) : Number {
+                return n * n
+            }
+
+            //codenarc-enable GosuUnusedFunctionMethod
+		    private function square2( n : Number ) : Number {
+                return n * n
+            }
+
+            function foo() {
+                bar(4)
+            }
+		"""
+
+        def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithViolationsDisableEnable"
+
+        def violations = []
+
+        def rule = new GosuUnusedPrivateFunctionRule()
+        rule.applyTo(sourceCode, violations)
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableAll() {
+
+        def code = """
+		    private function square( n : Number ) : Number {
+                return n * n
+            }
+
+            //codenarc-disable
+		    private function squar2( n : Number ) : Number {
+                return n * n
+            }
+
+            function foo() {
+                bar(4)
+            }
+		"""
+
+        def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithViolationsDisableAll1234"
+
+        def violations = []
+
+        def rule = new GosuUnusedPrivateFunctionRule()
+        rule.applyTo(sourceCode, violations)
+        assert 1 == violations.size()
+    }
+
+    void testApplyToWithViolationsDisableEnableAll() {
+
+        def code = """
+            //codenarc-disable
+		    private function square1( n : Number ) : Number {
+                return n * n
+            }
+
+            //codenarc-enable
+		    private function square2( n : Number ) : Number {
+                return n * n
+            }
+
+            function foo() {
+                bar(4)
+            }
+		"""
+
+        def sourceCode = new SourceString(code)
+        sourceCode.path = "testApplyToWithViolationsDisableEnable"
+
+        def violations = []
+
+        def rule = new GosuUnusedPrivateFunctionRule()
+        rule.applyTo(sourceCode, violations)
+        assert 1 == violations.size()
+    }
 }
