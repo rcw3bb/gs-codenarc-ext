@@ -122,8 +122,8 @@ The **codenarc.xml** holds the ruleset configuration for codenarc. The ruleset f
 6. Add the following to your **buildscript dependencies**:
 
    ```groovy
-   classpath group: 'org.codenarc', name: 'CodeNarc', version: '1.5'
-   classpath group: 'xyz.ronella.gosu', name: 'gs-codenarc-ext', version: '1.0.0'
+   classpath group: 'org.codenarc', name: 'CodeNarc', version: '2.1.0'
+   classpath group: 'xyz.ronella.gosu', name: 'gs-codenarc-ext', version: '1.1.0'
    ```
 
    *Example*
@@ -134,8 +134,8 @@ The **codenarc.xml** holds the ruleset configuration for codenarc. The ruleset f
            mavenCentral()
        }
        dependencies {
-           classpath group: 'org.codenarc', name: 'CodeNarc', version: '1.5'
-           classpath group: 'xyz.ronella.gosu', name: 'gs-codenarc-ext', version: '1.0.0'
+           classpath group: 'org.codenarc', name: 'CodeNarc', version: '2.1.0'
+           classpath group: 'xyz.ronella.gosu', name: 'gs-codenarc-ext', version: '1.1.0'
        }
    }
    ```
