@@ -535,7 +535,7 @@ class GosuUtil {
             }
 
             // Check within function
-            if (withinFunction && !GosuUtil.isBlankLine(obj)) {
+            if (withinFunction) {
 
                 functionWrapper.lines.add(obj)
 

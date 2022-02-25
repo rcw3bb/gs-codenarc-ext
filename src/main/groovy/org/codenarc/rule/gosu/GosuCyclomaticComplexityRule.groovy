@@ -50,7 +50,7 @@ class GosuCyclomaticComplexityRule extends AbstractGosuRule {
 					complexityCount += checkAdditionalComplexity(obj)
 				}
 				if (complexityCount > maxMethodComplexity) {
-					violations << createViolation(lineNumber, null, "Function complexity exceeds maximum. Maximum allowed: ${maxMethodComplexity}, Actual: ${complexityCount}")
+					violations << createViolation(lineNumber, obj, "Function complexity exceeds maximum. Maximum allowed: ${maxMethodComplexity}, Actual: ${complexityCount}")
 					break
 				}
 				lineNumber++

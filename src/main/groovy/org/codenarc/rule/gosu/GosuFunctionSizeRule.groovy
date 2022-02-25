@@ -42,13 +42,12 @@ class GosuFunctionSizeRule extends AbstractGosuRule {
 			for (def obj in it.lines) {
 				// Only count non-blank lines
 				if (!GosuUtil.isBlankLine(obj)) {
-					lineWithCode++
-
 					// Check for violation
 					if (lineWithCode > maxLines) {
 						violations << createViolation(lineCount, obj, "Maximum line count for function exceeded. Max: ${maxLines}, Actual: ${lineWithCode}")
 						break
 					}
+					lineWithCode++
 				}
 
 				lineCount++
