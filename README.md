@@ -123,7 +123,7 @@ The **codenarc.xml** holds the ruleset configuration for codenarc. The ruleset f
 
    ```groovy
    classpath group: 'org.codenarc', name: 'CodeNarc', version: '2.1.0'
-   classpath group: 'xyz.ronella.gosu', name: 'gs-codenarc-ext', version: '1.1.0'
+   classpath group: 'xyz.ronella.gosu', name: 'gs-codenarc-ext', version: '1.1.1'
    ```
 
    *Example*
@@ -135,7 +135,7 @@ The **codenarc.xml** holds the ruleset configuration for codenarc. The ruleset f
        }
        dependencies {
            classpath group: 'org.codenarc', name: 'CodeNarc', version: '2.1.0'
-           classpath group: 'xyz.ronella.gosu', name: 'gs-codenarc-ext', version: '1.1.0'
+           classpath group: 'xyz.ronella.gosu', name: 'gs-codenarc-ext', version: '1.1.1'
        }
    }
    ```
