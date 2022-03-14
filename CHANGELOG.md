@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.2 : 2022-03-14
+
+### Changed
+
+* The codenarc dependency was updated to 2.2.0 from 2.1.0
+
 ## 1.1.1 : 2022-02-25
 
 ### Fixed
@@ -14,7 +20,7 @@
 
 ### Changed
 
-* The codenarc dependency was updated to 2.0.1 from 1.5
+* The codenarc dependency was updated to 2.1.0 from 1.5
 
 ## 1.0.0 : 2020-05-29
 

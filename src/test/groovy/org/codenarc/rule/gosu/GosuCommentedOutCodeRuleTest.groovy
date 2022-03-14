@@ -83,7 +83,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
 		
 		def rule = new GosuCommentedOutCodeRule()
 		rule.applyTo(sourceCode, violations)
-		println violations.size()
 		assert 3 == violations.size()
 	}
   
@@ -103,7 +102,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
 
     def rule = new GosuCommentedOutCodeRule()
     rule.applyTo(sourceCode, violations)
-    println violations.size()
     assert 2 == violations.size()
   }
   
@@ -117,7 +115,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
     def violations = []
     def rule = new GosuCommentedOutCodeRule()
     rule.applyTo(sourceCode, violations)
-    println violations.size()
     assert 2 == violations.size()
   }
 
@@ -132,7 +129,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
         def violations = []
         def rule = new GosuCommentedOutCodeRule()
         rule.applyTo(sourceCode, violations)
-        println violations.size()
         assert 0 == violations.size()
     }
 
@@ -148,7 +144,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
         def violations = []
         def rule = new GosuCommentedOutCodeRule()
         rule.applyTo(sourceCode, violations)
-        println violations.size()
         assert 1 == violations.size()
     }
 
@@ -163,7 +158,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
         def violations = []
         def rule = new GosuCommentedOutCodeRule()
         rule.applyTo(sourceCode, violations)
-        println violations.size()
         assert 0 == violations.size()
     }
 
@@ -179,7 +173,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
         def violations = []
         def rule = new GosuCommentedOutCodeRule()
         rule.applyTo(sourceCode, violations)
-        println violations.size()
         assert 1 == violations.size()
     }
 
@@ -193,7 +186,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
     def violations = []
     def rule = new GosuCommentedOutCodeRule()
     rule.applyTo(sourceCode, violations)
-    println violations.size()
     assert 0 == violations.size()
   }
   
@@ -208,7 +200,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
     def violations = []
     def rule = new GosuCommentedOutCodeRule()
     rule.applyTo(sourceCode, violations)
-    println violations.size()
     assert 2 == violations.size()
   }
   
@@ -223,7 +214,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
     def violations = []
     def rule = new GosuCommentedOutCodeRule()
     rule.applyTo(sourceCode, violations)
-    println violations.size()
     assert 2 == violations.size()
   }
 
@@ -240,7 +230,6 @@ class GosuCommentedOutCodeRuleTest extends GroovyTestCase {
     def violations = []
     def rule = new GosuCommentedOutCodeRule()
     rule.applyTo(sourceCode, violations)
-    println violations.size()
     assert 2 == violations.size()
   }
 }
